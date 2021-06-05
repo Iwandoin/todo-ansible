@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  #connection: local
+  connection: local
   become: true
   tasks:
     - name: install dependency
