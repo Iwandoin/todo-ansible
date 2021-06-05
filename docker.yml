@@ -72,14 +72,4 @@
         accept_hostkey: yes
     - name: run the service defined in my_project's docker-compose.yml
       command: docker-compose -f ~/docker/docker-compose.prod.yml up -d --build
-      #docker_compose:
-        #project_src: /home/ivn/myproject/docker
-        #files:
-        #  - "docker-compose.prod.yml"
-       # state: present
-  # ssh-agent doesn't allow key to pass through remote sudo commands.
-  #handlers:
-   #- name: restart docker
-     #service: 
-       #name: docker 
-       #state: restarted
+      
