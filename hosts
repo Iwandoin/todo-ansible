@@ -9,14 +9,14 @@
 #   - A hostname/ip can be a member of multiple groups
 
 # Ex 1: Ungrouped hosts, specify before any group headers.
-#localhost
+localhost
 #green.example.com
 #blue.example.com
 #192.168.100.1
 #192.168.100.10
 #3.64.217.165
 # Ex 2: A collection of hosts belonging to the 'webservers' group
-18.193.116.24
+#18.193.116.24
 [webservers]
 #18.159.61.164
 #alpha.example.org
