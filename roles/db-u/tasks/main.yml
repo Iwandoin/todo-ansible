@@ -1,0 +1,26 @@
+- name: Install dependencies for PostgreSQL
+  apt:
+    name: ['bash', 'libssl-dev', 'libssl-doc']
+    update_cache: true
+    state: latest
+- name: Install PostgreSQL
+  apt:
+    name: [ 'postgresql', 'postgresql-contrib', 'libpq-dev', 'python3-psycopg2' ]
+    update_cache: true
+    state: latest
+- name: Ensure the PostgreSQL service is running
+  service: name=postgresql state=started enabled=yes
+- name: Create the database specified in vars
+  become: true
+  become_user: postgres
+  postgresql_db: name={{ db_name }}
+    template='template1'
+    state=present
+- name: Ensure user has access to the new database
+  become: true
+  become_user: postgres
+  postgresql_user: db={{ db_name }}
+    name={{ db_user }}
+    password={{ db_password }}
+    priv=ALL
+    state=present

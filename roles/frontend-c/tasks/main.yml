@@ -1,0 +1,31 @@
+- name: install node
+  yum:
+    name:
+      - nodejs
+      - npm
+      - git
+    state: latest
+    update_cache: yes
+- name: Clone a public repository into ~/todo-frontend.
+  git:
+    repo: https://github.com/Iwandoin/todo-frontend.git
+    #version: main
+    dest: ./todo-frontend/
+    accept_hostkey: yes
+    force: yes
+- name: Install packages based on package.json using the npm
+  npm:
+    path: ./todo-frontend/frontend/
+    state: present
+- name: Build app
+  command: npm run build
+  args:
+    chdir: ./todo-frontend/frontend/
+- name: Set permissions to build folder
+  file:
+    path: ./todo-frontend/frontend/
+    state: directory
+    mode: '0775'
+    recurse: yes
+    owner: "root"
+    group: "root"

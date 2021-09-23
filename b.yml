@@ -1,0 +1,19 @@
+---
+- hosts: all
+  roles:
+    - role: db-u
+      when: ansible_distribution == 'Ubuntu'
+    - role: db-c
+      when: ansible_distribution == 'CentOS'
+    - role: backend-u
+      when: ansible_distribution == 'Ubuntu'
+    - role: backend-c
+      when: ansible_distribution == 'CentOS'
+    - role: frontend-u
+      when: ansible_distribution == 'Ubuntu'
+    - role: frontend-c
+      when: ansible_distribution == 'CentOS'
+    - role: nginx-u
+      when: ansible_distribution == 'Ubuntu'
+    - role: nginx-c
+      when: ansible_distribution == 'CentOS'
