@@ -1,0 +1,41 @@
+- name: Install pip
+  apt:
+    name: "{{backend_packages}}"
+    state: latest
+    update_cache: yes
+  when: ansible_distribution == 'Ubuntu'
+- name: install pip
+  yum:
+    name: "{{backend_packages}}"
+    state: latest
+    update_cache: yes
+- name: Clone a public repository into ~/todo-backend.
+  git:
+    repo: https://github.com/Iwandoin/todo-backend.git
+    #version: main
+    dest: ./todo-backend/
+    accept_hostkey: yes
+    force: yes
+- name: install dependency
+  pip:
+    state: present
+    virtualenv: /home/vagrant/venv
+    requirements: /home/vagrant/todo-backend/requirements.txt
+- name: Create python symlink to python
+  file:
+    src: "/usr/bin/python3"
+    dest: "/usr/bin/python"
+    state: link
+- name: Migrate database
+  django_manage:
+    command: migrate
+    app_path: todo-backend/backend
+    virtualenv: /home/vagrant/venv
+  register: migrate
+  environment: '{{backend_environment}}'
+- name: Gunicorn run
+  gunicorn:
+    app: 'backend.wsgi'
+    chdir: /home/vagrant/todo-backend/backend
+    virtualenv: /home/vagrant/venv
+  environment: '{{backend_environment}}'

@@ -1,4 +1,0 @@
-database_port: 5432
-db_name: "backend"
-db_user: "backend"
-db_password: "backendbackend"

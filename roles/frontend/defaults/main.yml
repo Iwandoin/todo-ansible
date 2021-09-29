@@ -1,0 +1,4 @@
+frontend_packages:
+  - nodejs
+  - npm
+  - git

@@ -1,19 +1,24 @@
 ---
 - hosts: all
   roles:
-    - role: db-u
-      when: ansible_distribution == 'Ubuntu'
-    - role: db-c
-      when: ansible_distribution == 'CentOS'
-    - role: backend-u
-      when: ansible_distribution == 'Ubuntu'
-    - role: backend-c
-      when: ansible_distribution == 'CentOS'
-    - role: frontend-u
-      when: ansible_distribution == 'Ubuntu'
-    - role: frontend-c
-      when: ansible_distribution == 'CentOS'
-    - role: nginx-u
-      when: ansible_distribution == 'Ubuntu'
-    - role: nginx-c
-      when: ansible_distribution == 'CentOS'
+    - role: disable_selinux
+    - role: db
+      db_name: backend
+      db_user: backend
+      db_password: backendbackend
+    - role: backend
+      backend_environment:
+        DEBUG: 0
+        DJANGO_ALLOWED_HOSTS: '*'
+        SQL_ENGINE: django.db.backends.postgresql
+        SQL_DATABASE: backend
+        SQL_USER: backend
+        SQL_PASSWORD: backendbackend
+        SQL_HOST: localhost
+        SQL_PORT: 5432
+        SECRET_KEY: kx8hi*n!9@^7m2z5hi!0pdw%3q=h@sn0el^i+g4u59=*g_uw$e
+        DATABASE: postgres
+        AWS_S3_ACCESS_KEY: ''
+        AWS_S3_SECRET_KEY: ''
+    - role: frontend
+    - role: nginx

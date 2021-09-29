@@ -1,0 +1,62 @@
+- name: Install dnf-utils
+  dnf:
+    name:
+      - dnf-utils
+    state: latest
+  when: ansible_distribution == 'CentOS'
+- name: copy nginx nginx.repo
+  template:
+    src: nginx.repo
+    dest: /etc/yum.repos.d/
+    owner: root
+    group: root
+    mode: '0644'
+  when: ansible_distribution == 'CentOS'
+- name: Install the 1.18.0 version of nginx
+  dnf:
+    name:
+      - nginx-1.18.0
+    state: present
+  when: ansible_distribution == 'CentOS'
+- name: delete default nginx site
+  file:
+    path: /etc/nginx/conf.d/default.conf
+    state: absent
+  when: ansible_distribution == 'CentOS'
+- name: copy nginx nginx.conf
+  template:
+    src: nginx.conf
+    dest: /etc/nginx/conf.d/nginx.conf
+    owner: root
+    group: root
+    mode: '0644'
+  when: ansible_distribution == 'CentOS'
+- replace:
+    path: /etc/nginx/nginx.conf
+    regexp: 'user  nginx'
+    replace: 'user  root'
+    backup: yes
+  when: ansible_distribution == 'CentOS'
+- name: install nginx
+  apt:
+    name: ['nginx']
+    state: latest
+    update_cache: yes
+  when: ansible_distribution == 'Ubuntu'
+- name: Delete default nginx site
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  when: ansible_distribution == 'Ubuntu'
+- name: Copy nginx nginx.conf
+  template:
+    src: nginx.conf
+    dest: /etc/nginx/sites-enabled/
+    owner: root
+    group: root
+    mode: '0644'
+  when: ansible_distribution == 'Ubuntu'
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted

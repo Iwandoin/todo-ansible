@@ -1,0 +1,18 @@
+database_port: 5432
+db_name: backend
+db_user: backend
+db_password: backendbackend
+db_ubuntu_packages:
+  - bash
+  - libssl-dev
+  - libssl-doc
+  - postgresql
+  - postgresql-contrib
+  - libpq-dev
+  - python3-psycopg2
+db_centos_packages:
+  - bash
+  - postgresql-server
+  - python3
+  - postgresql
+  - python3-psycopg2
