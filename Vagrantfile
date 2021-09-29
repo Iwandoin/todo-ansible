@@ -2,8 +2,14 @@ Vagrant.configure(2) do |config|
   config.vm.box = "centos/8" #"bento/ubuntu-20.04" #
   config.vm.box_check_update = true
   config.vm.network "forwarded_port", guest: 80, host: 8080 # Webserver port
+<<<<<<< HEAD
 
   config.vm.provider "virtualbox" do |vb|
+=======
+  
+  
+   config.vm.provider "virtualbox" do |vb|
+>>>>>>> ca5980d27a70ba703a544907a32535ef02ef01be
     vb.memory = "2048"
   end
 
